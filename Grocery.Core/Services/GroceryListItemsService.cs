@@ -56,5 +56,10 @@ namespace Grocery.Core.Services
                 g.Product = _productRepository.Get(g.ProductId) ?? new(0, "", 0);
             }
         }
+        public List<Product> FilterLijst(string product, List<Product> availableProducts)
+        {
+           List<Product> Nieuwelijst = availableProducts.Where(p => p.Name.Contains(product, StringComparison.CurrentCultureIgnoreCase)).ToList();
+            return Nieuwelijst; 
+        }
     }
 }
