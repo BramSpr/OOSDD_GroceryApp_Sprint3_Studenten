@@ -85,6 +85,25 @@ namespace Grocery.App.ViewModels
                 await Toast.Make($"Opslaan mislukt: {ex.Message}").Show(cancellationToken);
             }
         }
+        public void Searchbar_SearchButtonPressed(object sender, EventArgs e)
+        {
+            if (sender is SearchBar searchbar)
+            {
+                var alleProducten = _productService.GetAll();
+                    alleProducten.Where(p => MyGroceryListItems.All(g => g.ProductId != p.Id) && p.Stock > 0).ToList();
+
+                var gefilterdeLijst = _groceryListItemsService.FilterLijst(searchbar.Text, alleProducten);
+
+
+                AvailableProducts.Clear();
+                foreach (var p in gefilterdeLijst)
+                {
+                    AvailableProducts.Add(p);
+                }
+            }
+        }
+
+
 
     }
 }
